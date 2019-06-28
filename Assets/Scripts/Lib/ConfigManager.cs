@@ -1,25 +1,26 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 // 配置管理类
 public class ConfigManager : Singleten<ConfigManager>
 {
     /// <summary>
-    /// 缓存配置
+    /// 缓存配置，这里类型转换要用 IDictionary, 这个才是父类，用 IDictionary<> 或者 Dictionary<> 会重新生成对应的类型，无法类型转换。
     /// </summary>
-    Dictionary<string, Dictionary<string, Config>> configListMap = new Dictionary<string, Dictionary<string, Config>>();
+    Dictionary<string, IDictionary> configListMap = new Dictionary<string, IDictionary>();
 
     /// <summary>
     /// 读取整个配置表
     /// </summary>
     /// <typeparam name="T">配置类</typeparam>
     /// <returns>数据字典</returns>
-    public Dictionary<string, Config> LoadConfigs<T>() where T : Config, new()
+    public Dictionary<string, T> LoadConfigs<T>() where T : Config, new()
     {
         var configName = typeof(T).Name;
         if (!configListMap.ContainsKey(configName))
         {
-            Dictionary<string, Config> configList = new Dictionary<string, Config>();
+            Dictionary<string, T> configList = new Dictionary<string, T>();
             TextAsset ta = ResourceManager.Instance.Load<TextAsset>(Const.configPath + configName + Const.textAssetExt);
             var strLines = ta.text.Split('\n');
             foreach (var item in strLines)
@@ -28,9 +29,9 @@ public class ConfigManager : Singleten<ConfigManager>
                 t.ParseDataRow(item);
                 configList.Add(t.Id, t);
             }
-            configListMap.Add(configName, configList as Dictionary<string, Config>);
+            configListMap.Add(configName, configList as IDictionary);
         }
-        return configListMap[configName] as Dictionary<string, Config>;
+        return configListMap[configName] as Dictionary<string, T>;
     }
 
     /// <summary>
