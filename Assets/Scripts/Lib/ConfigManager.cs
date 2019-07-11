@@ -21,7 +21,7 @@ public class ConfigManager : Singleten<ConfigManager>
         if (!configListMap.ContainsKey(configName))
         {
             Dictionary<string, T> configList = new Dictionary<string, T>();
-            TextAsset ta = ResourceManager.Instance.Load<TextAsset>(Const.configPath + configName + Const.textAssetExt);
+            TextAsset ta = ResourceManager.Instance.Load<TextAsset>(configName);
             var strLines = ta.text.Split('\n');
             foreach (var item in strLines)
             {

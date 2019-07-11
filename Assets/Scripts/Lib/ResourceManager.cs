@@ -9,6 +9,20 @@ public class ResourceManager : Singleten<ResourceManager>
 
     public T Load<T>(string path) where T : Object
     {
+        var type = typeof(T);
+        if (type == typeof(Sprite))
+        {
+            path = Const.artPath + path + Const.spriteAssetExt;
+        }
+        else if (type == typeof(TextAsset))
+        {
+            path = Const.configPath + path + Const.textAssetExt;
+        }
+        else if(type == typeof(Transform) || type == typeof(GameObject))
+        {
+            path = Const.prefabPath + path + Const.prefabAssetExt;
+        }
+
         if (!cacheResourceMap.ContainsKey(path))
         {
             T resource = AssetDatabase.LoadAssetAtPath<T>(path);
