@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Tools : Singleten<Tools>
+public class Tools : SingletenMono<Tools>
 {
     public Canvas canvas;
     

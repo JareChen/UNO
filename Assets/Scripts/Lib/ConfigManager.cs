@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // 配置管理类
-public class ConfigManager : Singleten<ConfigManager>
+public class ConfigManager : SingletenMono<ConfigManager>
 {
     /// <summary>
     /// 缓存配置，这里类型转换要用 IDictionary, 这个才是父类，用 IDictionary<> 或者 Dictionary<> 会重新生成对应的类型，无法类型转换。

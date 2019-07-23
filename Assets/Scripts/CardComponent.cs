@@ -1,10 +1,12 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class CardComponent : MonoBehaviour
 {
     public int offsetY = 20;
-
+    public CardConfig config;
     private bool isSelect;
     private Vector3 originPos;
     private EventTriggerListener listener;
@@ -37,7 +39,11 @@ public class CardComponent : MonoBehaviour
 
     public void OnDoubleClick()
     {
-        Debug.LogError("Double Click");
+        bool pushResult = GamePlayController.Instance.TryPushCard(this);
+        if (pushResult)
+        {
+
+        }
     }
 
     public void OnLongClick()
@@ -53,8 +59,16 @@ public class CardComponent : MonoBehaviour
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        transform.localPosition = originPos;
-        isSelect = false;
+        bool pushResult = GamePlayController.Instance.TryPushCard(this);
+        if (pushResult)
+        {
+            
+        }
+        else
+        {
+            transform.localPosition = originPos;
+            isSelect = false;
+        }
     }
 
     public void OnPointDown()
@@ -63,5 +77,10 @@ public class CardComponent : MonoBehaviour
         {
             originPos = transform.localPosition;
         }
+    }
+
+    public void Show()
+    {
+        GetComponent<Image>().sprite = ResourceManager.Instance.Load<Sprite>(config.ResName);
     }
 }

@@ -5,14 +5,17 @@ using UnityEngine;
 
 public class Player
 {
-    public List<Card> cardList = new List<Card>();
-    public void AddCard(Card card)
+    public bool isPush;
+    public Transform trans;
+    public List<CardComponent> cardList = new List<CardComponent>();
+    public void AddCard(CardComponent cardComponent)
     {
-        cardList.Add(card);
+        cardList.Add(cardComponent);
     }
 
-    public void PushCard(Card card)
+    public void PushCard(CardComponent cardComponent)
     {
-
+        isPush = true;
+        cardList.Remove(cardComponent);
     }
 }

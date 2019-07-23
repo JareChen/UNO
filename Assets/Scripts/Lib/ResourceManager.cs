@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-public class ResourceManager : Singleten<ResourceManager>
+public class ResourceManager : SingletenMono<ResourceManager>
 {
     Dictionary<string, Object> cacheResourceMap = new Dictionary<string, Object>();
 
